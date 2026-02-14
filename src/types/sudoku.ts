@@ -20,9 +20,9 @@ export interface DifficultyConfig {
 }
 
 export const DIFFICULTY_CONFIGS: Record<Difficulty, DifficultyConfig> = {
-  easy: { label: 'Easy', description: '~38 clues', clueCount: 38, maxErases: 8, maxHints: 5 },
-  normal: { label: 'Normal', description: '~30 clues', clueCount: 30, maxErases: 5, maxHints: 3 },
-  hard: { label: 'Hard', description: '~24 clues', clueCount: 24, maxErases: 3, maxHints: 1 },
+  easy: { label: 'difficulty.easy.label', description: 'difficulty.easy.desc', clueCount: 38, maxErases: 8, maxHints: 5 },
+  normal: { label: 'difficulty.normal.label', description: 'difficulty.normal.desc', clueCount: 30, maxErases: 5, maxHints: 3 },
+  hard: { label: 'difficulty.hard.label', description: 'difficulty.hard.desc', clueCount: 24, maxErases: 3, maxHints: 1 },
 }
 
 export interface GameRecord {

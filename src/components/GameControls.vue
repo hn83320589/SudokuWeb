@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 defineProps<{
   erasesLeft: number
   hintsLeft: number
@@ -19,20 +23,20 @@ const emit = defineEmits<{
       class="px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-sm transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
       @click="emit('erase')"
     >
-      Erase ({{ erasesLeft }})
+      {{ t('controls.erase', { count: erasesLeft }) }}
     </button>
     <button
       :disabled="hintsLeft <= 0 || isComplete"
       class="px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-sm transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
       @click="emit('hint')"
     >
-      Hint ({{ hintsLeft }})
+      {{ t('controls.hint', { count: hintsLeft }) }}
     </button>
     <button
       class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition-colors cursor-pointer"
       @click="emit('newGame')"
     >
-      New Game
+      {{ t('controls.newGame') }}
     </button>
   </div>
 </template>

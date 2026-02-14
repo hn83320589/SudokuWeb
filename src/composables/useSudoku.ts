@@ -24,11 +24,31 @@ export function useSudoku() {
     newlyCompleted.value = []
   }
 
+  function hasConflict(row: number, col: number, value: number): boolean {
+    for (const [r, c] of classicRules.getRelatedCells(row, col)) {
+      const other = board.value[r]?.[c]
+      if (other && other.value === value) return true
+    }
+    return false
+  }
+
+  function updateErrors() {
+    for (const row of board.value) {
+      for (const cell of row) {
+        if (cell.isGiven || cell.value === 0) {
+          cell.isError = false
+        } else {
+          cell.isError = hasConflict(cell.row, cell.col, cell.value)
+        }
+      }
+    }
+  }
+
   function setCellValue(row: number, col: number, value: number) {
     const cell = board.value[row]?.[col]
     if (!cell || cell.isGiven) return
     cell.value = value
-    cell.isError = value !== 0 && value !== cell.solution
+    updateErrors()
     checkCompletions()
   }
 
@@ -36,7 +56,7 @@ export function useSudoku() {
     const cell = board.value[row]?.[col]
     if (!cell || cell.isGiven) return
     cell.value = 0
-    cell.isError = false
+    updateErrors()
     checkCompletions()
   }
 

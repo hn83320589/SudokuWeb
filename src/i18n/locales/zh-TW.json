@@ -1,0 +1,35 @@
+{
+  "app": { "title": "數獨" },
+  "nav": { "settings": "設定", "records": "紀錄" },
+  "victory": {
+    "heading": "恭喜完成！",
+    "difficulty": "難度：",
+    "time": "時間：",
+    "steps": "步數：",
+    "newGame": "新遊戲",
+    "congratulation": "恭喜通關"
+  },
+  "controls": {
+    "erase": "清除 ({count})",
+    "hint": "提示 ({count})",
+    "newGame": "新遊戲"
+  },
+  "status": { "steps": "步數：", "erases": "清除：", "hints": "提示：", "pause": "暫停", "resume": "繼續" },
+  "records": {
+    "heading": "紀錄",
+    "empty": "此難度尚無紀錄。",
+    "rank": "#",
+    "time": "時間",
+    "steps": "步數"
+  },
+  "settings": {
+    "heading": "難度",
+    "subtitle": "下一場新遊戲生效。"
+  },
+  "difficulty": {
+    "easy": { "label": "簡單", "desc": "約 38 個提示" },
+    "normal": { "label": "普通", "desc": "約 30 個提示" },
+    "hard": { "label": "困難", "desc": "約 24 個提示" }
+  },
+  "common": { "close": "關閉" }
+}

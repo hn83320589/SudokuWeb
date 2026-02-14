@@ -2,6 +2,7 @@ import { ref, watch, onUnmounted } from 'vue'
 import type { Difficulty } from '../types/sudoku'
 import { DIFFICULTY_CONFIGS } from '../types/sudoku'
 import { useSudoku } from './useSudoku'
+import { getCookie, setCookie } from '../utils/cookie'
 
 export function useGame() {
   const {
@@ -14,14 +15,17 @@ export function useGame() {
     clearCell,
   } = useSudoku()
 
-  const difficulty = ref<Difficulty>('normal')
-  const nextDifficulty = ref<Difficulty>('normal')
+  const saved = getCookie('difficulty') as Difficulty | null
+  const initialDifficulty: Difficulty = saved && saved in DIFFICULTY_CONFIGS ? saved : 'normal'
+  const difficulty = ref<Difficulty>(initialDifficulty)
+  const nextDifficulty = ref<Difficulty>(initialDifficulty)
   const selectedCell = ref<{ row: number; col: number } | null>(null)
   const timer = ref(0)
   const steps = ref(0)
-  const erasesLeft = ref(DIFFICULTY_CONFIGS['normal'].maxErases)
-  const hintsLeft = ref(DIFFICULTY_CONFIGS['normal'].maxHints)
+  const erasesLeft = ref(DIFFICULTY_CONFIGS[initialDifficulty].maxErases)
+  const hintsLeft = ref(DIFFICULTY_CONFIGS[initialDifficulty].maxHints)
   const isRunning = ref(false)
+  const isPaused = ref(false)
   let timerInterval: ReturnType<typeof setInterval> | null = null
 
   function startTimer() {
@@ -44,12 +48,28 @@ export function useGame() {
     if (complete) stopTimer()
   })
 
+  function togglePause() {
+    if (isComplete.value || !isRunning.value) return
+    isPaused.value = !isPaused.value
+    if (isPaused.value) {
+      if (timerInterval) {
+        clearInterval(timerInterval)
+        timerInterval = null
+      }
+    } else {
+      timerInterval = setInterval(() => {
+        timer.value++
+      }, 1000)
+    }
+  }
+
   function selectCell(row: number, col: number) {
+    if (isPaused.value) return
     selectedCell.value = { row, col }
   }
 
   function placeNumber(num: number) {
-    if (!selectedCell.value || isComplete.value) return
+    if (!selectedCell.value || isComplete.value || isPaused.value) return
     const { row, col } = selectedCell.value
     const cell = board.value[row]?.[col]
     if (!cell || cell.isGiven) return
@@ -62,7 +82,7 @@ export function useGame() {
   }
 
   function eraseCell() {
-    if (!selectedCell.value || isComplete.value) return
+    if (!selectedCell.value || isComplete.value || isPaused.value) return
     if (erasesLeft.value <= 0) return
     const { row, col } = selectedCell.value
     const cell = board.value[row]?.[col]
@@ -73,7 +93,7 @@ export function useGame() {
   }
 
   function useHint() {
-    if (!selectedCell.value || isComplete.value) return
+    if (!selectedCell.value || isComplete.value || isPaused.value) return
     if (hintsLeft.value <= 0) return
     const { row, col } = selectedCell.value
     const cell = board.value[row]?.[col]
@@ -89,7 +109,9 @@ export function useGame() {
 
   function startNewGame() {
     stopTimer()
+    isPaused.value = false
     difficulty.value = nextDifficulty.value
+    setCookie('difficulty', difficulty.value)
     const config = DIFFICULTY_CONFIGS[difficulty.value]
     timer.value = 0
     steps.value = 0
@@ -114,6 +136,7 @@ export function useGame() {
     erasesLeft,
     hintsLeft,
     isRunning,
+    isPaused,
     isComplete,
     completedGroups,
     newlyCompleted,
@@ -121,6 +144,7 @@ export function useGame() {
     placeNumber,
     eraseCell,
     useHint,
+    togglePause,
     startNewGame,
   }
 }

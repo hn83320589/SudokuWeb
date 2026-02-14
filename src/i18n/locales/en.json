@@ -1,0 +1,35 @@
+{
+  "app": { "title": "Sudoku" },
+  "nav": { "settings": "Settings", "records": "Records" },
+  "victory": {
+    "heading": "Puzzle Complete!",
+    "difficulty": "Difficulty:",
+    "time": "Time:",
+    "steps": "Steps:",
+    "newGame": "New Game",
+    "congratulation": "Congrats!"
+  },
+  "controls": {
+    "erase": "Erase ({count})",
+    "hint": "Hint ({count})",
+    "newGame": "New Game"
+  },
+  "status": { "steps": "Steps:", "erases": "Erases:", "hints": "Hints:", "pause": "Pause", "resume": "Resume" },
+  "records": {
+    "heading": "Records",
+    "empty": "No records yet for this difficulty.",
+    "rank": "#",
+    "time": "Time",
+    "steps": "Steps"
+  },
+  "settings": {
+    "heading": "Difficulty",
+    "subtitle": "Applies to the next new game."
+  },
+  "difficulty": {
+    "easy": { "label": "Easy", "desc": "~38 clues" },
+    "normal": { "label": "Normal", "desc": "~30 clues" },
+    "hard": { "label": "Hard", "desc": "~24 clues" }
+  },
+  "common": { "close": "Close" }
+}

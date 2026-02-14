@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import type { Difficulty, GameRecord } from '../types/sudoku'
+
+const { t } = useI18n()
 
 const props = defineProps<{
   records: GameRecord[]
@@ -12,11 +15,7 @@ const emit = defineEmits<{
 
 const activeTab = ref<Difficulty>('normal')
 
-const tabs: { value: Difficulty; label: string }[] = [
-  { value: 'easy', label: 'Easy' },
-  { value: 'normal', label: 'Normal' },
-  { value: 'hard', label: 'Hard' },
-]
+const tabs: Difficulty[] = ['easy', 'normal', 'hard']
 
 const filteredRecords = computed(() =>
   props.records
@@ -34,32 +33,32 @@ function formatTime(seconds: number): string {
 <template>
   <div class="fixed inset-0 flex items-center justify-center z-50 bg-black/50" @click="emit('close')">
     <div class="bg-slate-800 border border-slate-600 rounded-2xl p-6 min-w-80 max-w-sm shadow-2xl" @click.stop>
-      <h2 class="text-xl font-bold text-indigo-400 mb-4">Records</h2>
+      <h2 class="text-xl font-bold text-indigo-400 mb-4">{{ t('records.heading') }}</h2>
 
       <div class="flex gap-1 mb-4">
         <button
           v-for="tab in tabs"
-          :key="tab.value"
+          :key="tab"
           class="px-3 py-1 text-sm rounded-lg transition-colors cursor-pointer"
-          :class="activeTab === tab.value
+          :class="activeTab === tab
             ? 'bg-indigo-600/40 text-indigo-200'
             : 'bg-slate-700 hover:bg-slate-600 text-slate-400'"
-          @click="activeTab = tab.value"
+          @click="activeTab = tab"
         >
-          {{ tab.label }}
+          {{ t(`difficulty.${tab}.label`) }}
         </button>
       </div>
 
       <div v-if="filteredRecords.length === 0" class="text-slate-500 text-sm py-4 text-center">
-        No records yet for this difficulty.
+        {{ t('records.empty') }}
       </div>
 
       <table v-else class="w-full text-sm">
         <thead>
           <tr class="text-slate-400 border-b border-slate-700">
-            <th class="py-2 text-left">#</th>
-            <th class="py-2 text-left">Time</th>
-            <th class="py-2 text-left">Steps</th>
+            <th class="py-2 text-left">{{ t('records.rank') }}</th>
+            <th class="py-2 text-left">{{ t('records.time') }}</th>
+            <th class="py-2 text-left">{{ t('records.steps') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -75,7 +74,7 @@ function formatTime(seconds: number): string {
         class="mt-4 w-full px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-300 text-sm transition-colors cursor-pointer"
         @click="emit('close')"
       >
-        Close
+        {{ t('common.close') }}
       </button>
     </div>
   </div>

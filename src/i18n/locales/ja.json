@@ -1,0 +1,35 @@
+{
+  "app": { "title": "数独" },
+  "nav": { "settings": "設定", "records": "記録" },
+  "victory": {
+    "heading": "パズル完成！",
+    "difficulty": "難易度：",
+    "time": "時間：",
+    "steps": "手数：",
+    "newGame": "新しいゲーム",
+    "congratulation": "クリア!"
+  },
+  "controls": {
+    "erase": "消去 ({count})",
+    "hint": "ヒント ({count})",
+    "newGame": "新しいゲーム"
+  },
+  "status": { "steps": "手数：", "erases": "消去：", "hints": "ヒント：", "pause": "一時停止", "resume": "再開" },
+  "records": {
+    "heading": "記録",
+    "empty": "この難易度の記録はまだありません。",
+    "rank": "#",
+    "time": "時間",
+    "steps": "手数"
+  },
+  "settings": {
+    "heading": "難易度",
+    "subtitle": "次の新しいゲームに適用されます。"
+  },
+  "difficulty": {
+    "easy": { "label": "かんたん", "desc": "約38マス" },
+    "normal": { "label": "ふつう", "desc": "約30マス" },
+    "hard": { "label": "むずかしい", "desc": "約24マス" }
+  },
+  "common": { "close": "閉じる" }
+}
